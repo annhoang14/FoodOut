@@ -29,9 +29,9 @@ const RestaurantCard = (props) => {
         size="small"
         extra={<a href="#">More</a>}
         style={{ width: 300 }} >
-        <p>Location: <em>{restaurant.location}</em></p>
+        <p>Location: <em>{restaurant.vicinity}</em></p>
         <p>Rating: {restaurant.rating}</p>
-        <p>{restaurant.price}</p>
+        <p>Price Level: {"$".repeat(restaurant.price_level)}</p>
       </Card>
     </div>
   )

@@ -120,7 +120,8 @@ function App() {
       }
     })
     .then( function( response ) {
-      console.log( response.data )
+      setAllRestaurants( response.data.results );
+      console.log( allRestaurants )
     })
   }
 
