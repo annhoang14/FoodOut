@@ -5,8 +5,6 @@ import { Row, Col, Input } from "antd";
 import RestaurantDisplay from "./RestaurantDisplay.js";
 import MapDisplay from "./MapDisplay.js";
 
-import { googlePlacesKey } from "./APIKey.js";
-
 const { Search } = Input;
 
 function App() {
@@ -47,15 +45,20 @@ function App() {
   } 
   
   const axios = require('axios');
+  // const GP_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
+  const GP_API_KEY = "hee-hee";
 
   const makePlacesRequest = (searchString) => {
     axios.get('https://maps.googleapis.com/maps/api/geocode/json?', {
       params: {
         address: searchString.trim().replace(" ", "+"),
-        key: googlePlacesKey,
+        key: GP_API_KEY,
       }
     })
     .then(function (response) {
+      clog(process.env.GOOGLE_PLACES_API_KEY);
+      clog(GP_API_KEY);
+      clog(response);
       /*The 0 may need to change depending on how the API returns this array*/
       const loc = response.data.results[0].geometry.location;
       setSearchLocation([loc.lat, loc.lng]);
@@ -116,7 +119,7 @@ function App() {
         radius: searchRadius,
         type: "restaurant",
         opennow: true,
-        key: googlePlacesKey
+        key: GP_API_KEY
       }
     })
     .then( function( response ) {
