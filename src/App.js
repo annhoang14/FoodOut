@@ -39,13 +39,13 @@ function App() {
       id: 2
     },
   ]);
-  const [searchLocation, setSearchLocation] = React.useState([0,0]); //[lat, long]
+  const [searchLocation, setSearchLocation] = React.useState([0, 0]); //[lat, long]
   const [searchRadius, setSearchRadius] = React.useState(50000); //radius
 
   const clog = toPrint => {
     console.log(toPrint)
-  } 
-  
+  }
+
   const axios = require('axios');
 
   const makePlacesRequest = (searchString) => {
@@ -55,20 +55,20 @@ function App() {
         key: googlePlacesKey,
       }
     })
-    .then(function (response) {
-      /*The 0 may need to change depending on how the API returns this array*/
-      const loc = response.data.results[0].geometry.location;
-      setSearchLocation([loc.lat, loc.lng]);
-    })
-    .catch(function (error) {
-      console.log("ERROR in \"makePlacesRequest\"")
-      console.log(error);
-    })
+      .then(function (response) {
+        /*The 0 may need to change depending on how the API returns this array*/
+        const loc = response.data.results[0].geometry.location;
+        setSearchLocation([loc.lat, loc.lng]);
+      })
+      .catch(function (error) {
+        console.log("ERROR in \"makePlacesRequest\"")
+        console.log(error);
+      })
 
     getNearByRestaurants();
   }
 
-  
+
   // var cors_api_url = 'https://cors-anywhere.herokuapp.com/';
   // function doCORSRequest(options, printResult) {
   //   var x = new XMLHttpRequest();
@@ -110,7 +110,7 @@ function App() {
 
 
   const getNearByRestaurants = () => {
-    axios.get( "https://maps.googleapis.com/maps/api/place/nearbysearch/json?", {
+    axios.get("https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?", {
       params: {
         location: searchLocation[0] + "," + searchLocation[1],
         radius: searchRadius,
@@ -119,26 +119,26 @@ function App() {
         key: googlePlacesKey
       }
     })
-    .then( function( response ) {
-      setAllRestaurants( response.data.results );
-      console.log( allRestaurants )
-    })
+      .then(function (response) {
+        setAllRestaurants(response.data.results);
+        console.log(allRestaurants)
+      })
   }
 
-  const handleSelect = async (value) => {}
+  const handleSelect = async (value) => { }
 
   return (
     <Row>
       <Col span={10}>
         <Search
-        placeholder="input search text"
-        size="large"
-        id="userSearch"
-        onSearch={(searchString) => {
-          makePlacesRequest(searchString);
-        }}
-        enterButton
-      />
+          placeholder="input search text"
+          size="large"
+          id="userSearch"
+          onSearch={(searchString) => {
+            makePlacesRequest(searchString);
+          }}
+          enterButton
+        />
         <RestaurantDisplay allRestaurants={allRestaurants} />
       </Col>
       <Col span={12}>
