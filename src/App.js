@@ -5,8 +5,6 @@ import { Row, Col, Input } from "antd";
 import RestaurantDisplay from "./RestaurantDisplay.js";
 import MapDisplay from "./MapDisplay.js";
 
-import { googlePlacesKey } from "./APIKey.js";
-
 const { Search } = Input;
 
 function App() {
@@ -47,67 +45,33 @@ function App() {
   }
 
   const axios = require('axios');
+  
+  /*.env key hiding not working yet*/
+  // const GP_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
+  const GP_API_KEY = "hee-hee";
 
   const makePlacesRequest = (searchString) => {
     axios.get('https://maps.googleapis.com/maps/api/geocode/json?', {
       params: {
         address: searchString.trim().replace(" ", "+"),
-        key: googlePlacesKey,
+        key: GP_API_KEY,
       }
     })
-      .then(function (response) {
-        /*The 0 may need to change depending on how the API returns this array*/
-        const loc = response.data.results[0].geometry.location;
-        setSearchLocation([loc.lat, loc.lng]);
-      })
-      .catch(function (error) {
-        console.log("ERROR in \"makePlacesRequest\"")
-        console.log(error);
-      })
+    .then(function (response) {
+      clog(process.env.GOOGLE_PLACES_API_KEY);
+      clog(GP_API_KEY);
+      clog(response);
+      /*The 0 may need to change depending on how the API returns this array*/
+      const loc = response.data.results[0].geometry.location;
+      setSearchLocation([loc.lat, loc.lng]);
+    })
+    .catch(function (error) {
+      console.log("ERROR in \"makePlacesRequest\"")
+      console.log(error);
+    })
 
     getNearByRestaurants();
   }
-
-
-  // var cors_api_url = 'https://cors-anywhere.herokuapp.com/';
-  // function doCORSRequest(options, printResult) {
-  //   var x = new XMLHttpRequest();
-  //   x.open(options.method, cors_api_url + options.url);
-  //   x.onload = x.onerror = function() {
-  //     printResult(
-  //       options.method + ' ' + options.url + '\n' +
-  //       x.status + ' ' + x.statusText + '\n\n' +
-  //       (x.responseText || '')
-  //     );
-  //   };
-  //   if (/^POST/i.test(options.method)) {
-  //     x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  //   }
-  //   x.send(options.data);
-  // }
-
-  // // Bind event
-  // (function() {
-  //   var urlField = document.getElementById('url');
-  //   var dataField = document.getElementById('data');
-  //   var outputField = document.getElementById('output');
-  //   document.getElementById('get').onclick =
-  //   document.getElementById('post').onclick = function(e) {
-  //     e.preventDefault();
-  //     doCORSRequest({
-  //       method: this.id === 'post' ? 'POST' : 'GET',
-  //       url: urlField.value,
-  //       data: dataField.value
-  //     }, function printResult(result) {
-  //       outputField.value = result;
-  //     });
-  //   };
-  // })();
-  // if (typeof console === 'object') {
-  //   console.log('// To test a local CORS Anywhere server, set cors_api_url. For example:');
-  //   console.log('cors_api_url = "http://localhost:8080/"');
-  // }
-
 
   const getNearByRestaurants = () => {
     axios.get("https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?", {
@@ -116,7 +80,7 @@ function App() {
         radius: searchRadius,
         type: "restaurant",
         opennow: true,
-        key: googlePlacesKey
+        key: GP_API_KEY
       }
     })
       .then(function (response) {
