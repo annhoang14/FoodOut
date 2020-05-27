@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { Row, Col, Input } from "antd";
 
-import RestaurantDisplay from "./RestaurantDisplay.js";
-import MapDisplay from "./MapDisplay.js";
+import RestaurantDisplay from "./restaurant-display/RestaurantDisplay.js";
+import MapDisplay from "./map-display/MapDisplay.js";
 
 const { Search } = Input;
 
