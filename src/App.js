@@ -59,8 +59,9 @@ function App() {
     })
       .then(function (response) {
         /*The 0 may need to change depending on how the API returns this array*/
-        const loc = response.data.results[0].geometry.location;
-        setSearchLocation([loc.lat, loc.lng]);
+        //const loc = response.data.results[0].geometry.location;
+        //setSearchLocation([loc.lat, loc.lng]);
+        setSearchLocation([38.070591, -78.44631099999]);
       })
       .catch(function (error) {
         console.log("ERROR in \"makePlacesRequest\"")
