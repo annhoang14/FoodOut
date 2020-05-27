@@ -4,6 +4,7 @@ import { Row, Col, Input } from "antd";
 
 import RestaurantDisplay from "./restaurant-display/RestaurantDisplay.js";
 import MapDisplay from "./map-display/MapDisplay.js";
+import Filter from "./Filter.js";
 
 const { Search } = Input;
 
@@ -93,6 +94,9 @@ function App() {
 
   return (
     <Row>
+      <Col span={2}>
+        <Filter />
+      </Col>
       <Col span={10}>
         <Search
           placeholder="input search text"
@@ -106,8 +110,7 @@ function App() {
         <RestaurantDisplay allRestaurants={allRestaurants} />
       </Col>
       <Col span={12}>
-        {/* <MapDisplay allRestaurants={allRestaurants} /> */}
-        <MapDisplay searchLocation={searchLocation} />
+        <MapDisplay allRestaurants={allRestaurants} />
       </Col>
     </Row>
   )
