@@ -45,7 +45,7 @@ function App() {
   }
 
   const axios = require('axios');
-  
+
   /*.env key hiding not working yet*/
   // const GP_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
   const GP_API_KEY = "hee-hee";
@@ -57,18 +57,18 @@ function App() {
         key: GP_API_KEY,
       }
     })
-    .then(function (response) {
-      clog(process.env.GOOGLE_PLACES_API_KEY);
-      clog(GP_API_KEY);
-      clog(response);
-      /*The 0 may need to change depending on how the API returns this array*/
-      const loc = response.data.results[0].geometry.location;
-      setSearchLocation([loc.lat, loc.lng]);
-    })
-    .catch(function (error) {
-      console.log("ERROR in \"makePlacesRequest\"")
-      console.log(error);
-    })
+      .then(function (response) {
+        clog(process.env.GOOGLE_PLACES_API_KEY);
+        clog(GP_API_KEY);
+        clog(response);
+        /*The 0 may need to change depending on how the API returns this array*/
+        const loc = response.data.results[0].geometry.location;
+        setSearchLocation([loc.lat, loc.lng]);
+      })
+      .catch(function (error) {
+        console.log("ERROR in \"makePlacesRequest\"")
+        console.log(error);
+      })
 
     getNearByRestaurants();
   }
@@ -106,7 +106,8 @@ function App() {
         <RestaurantDisplay allRestaurants={allRestaurants} />
       </Col>
       <Col span={12}>
-        <MapDisplay allRestaurants={allRestaurants} />
+        {/* <MapDisplay allRestaurants={allRestaurants} /> */}
+        <MapDisplay searchLocation={searchLocation} />
       </Col>
     </Row>
   )
