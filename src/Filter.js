@@ -5,18 +5,18 @@ import { DownOutlined } from '@ant-design/icons';
 
 const Filter = () => {
 
-    //sort by rating (low to high)
-    lowToHigh = (arr) => {
-        sorted = arr.sort((a,b) => {
-          return a.rating - b.rating;
-        }); return sorted;
-      }
-    //sort by rating (high to low)
-    highToLow = (arr) => {
-        sorted = arr.sort((a,b) => {
-          return b.rating - a.rating;
-        }); return sorted;
-      }
+    // //sort by rating (low to high)
+    // lowToHigh = (arr) => {
+    //     sorted = arr.sort((a,b) => {
+    //       return a.rating - b.rating;
+    //     }); return sorted;
+    //   }
+    // //sort by rating (high to low)
+    // highToLow = (arr) => {
+    //     sorted = arr.sort((a,b) => {
+    //       return b.rating - a.rating;
+    //     }); return sorted;
+    //   }
     //sort by name (a-z)
 
     //sort by name (za)
