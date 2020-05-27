@@ -47,7 +47,6 @@ function App() {
 
   const axios = require('axios');
 
-  /*.env key hiding not working yet*/
   const GP_API_KEY = process.env.REACT_APP_GOOGLE_PLACES_API_KEY;
 
   const makePlacesRequest = (searchString) => {
@@ -61,7 +60,7 @@ function App() {
         /*The 0 may need to change depending on how the API returns this array*/
         //const loc = response.data.results[0].geometry.location;
         //setSearchLocation([loc.lat, loc.lng]);
-        setSearchLocation([38.070591, -78.44631099999]);
+        setSearchLocation([38.070591, -78.44631099999]); //hardcode cville location
       })
       .catch(function (error) {
         console.log("ERROR in \"makePlacesRequest\"")

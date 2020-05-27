@@ -21,17 +21,6 @@ const MapDisplay = ({ allRestaurants }) => {
       ]
     });
 
-    // var markerIcon = L.icon({
-    //   iconUrl: require('leaflet/dist/images/marker-icon.png'),
-    //   iconSize: [20, 40],
-    //   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-    //   shadowSize: [10, 20],
-    // });
-    // var marker = L.marker([38.033554, -78.507980],
-    //   { icon: markerIcon })
-    //   .addTo(mapObj);
-    // marker.bindPopup("<p>Hello, world</p>").openPopup();
-
     var markerIcon = L.icon({
       iconUrl: require('leaflet/dist/images/marker-icon.png'),
       iconSize: [20, 40],
