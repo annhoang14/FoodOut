@@ -48,8 +48,7 @@ function App() {
   const axios = require('axios');
 
   /*.env key hiding not working yet*/
-  // const GP_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
-  const GP_API_KEY = "hee-hee";
+  const GP_API_KEY = process.env.REACT_APP_GOOGLE_PLACES_API_KEY;
 
   const makePlacesRequest = (searchString) => {
     axios.get('https://maps.googleapis.com/maps/api/geocode/json?', {
@@ -59,9 +58,6 @@ function App() {
       }
     })
       .then(function (response) {
-        clog(process.env.GOOGLE_PLACES_API_KEY);
-        clog(GP_API_KEY);
-        clog(response);
         /*The 0 may need to change depending on how the API returns this array*/
         const loc = response.data.results[0].geometry.location;
         setSearchLocation([loc.lat, loc.lng]);
