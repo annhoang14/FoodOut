@@ -6,6 +6,8 @@ import RestaurantDisplay from "./restaurant-display/RestaurantDisplay.js";
 import MapDisplay from "./map-display/MapDisplay.js";
 import Filter from "./Filter.js";
 
+import dummyData from './dummyCvilleSearch'
+
 const { Search } = Input;
 
 function App() {
@@ -101,47 +103,48 @@ function App() {
   const GP_API_KEY = process.env.REACT_APP_GOOGLE_PLACES_API_KEY;
 
   const makePlacesRequest = (searchString) => {
-    axios.get('https://maps.googleapis.com/maps/api/geocode/json?', {
-      params: {
-        address: searchString.trim().replace(" ", "+"),
-        key: GP_API_KEY,
-      }
-    })
-      .then(function (response) {
-        /*The 0 may need to change depending on how the API returns this array*/
-        //const loc = response.data.results[0].geometry.location;
-        //setSearchLocation([loc.lat, loc.lng]);
-        setSearchLocation([38.070591, -78.44631099999]); //hardcode cville location
-      })
-      .catch(function(error) {
-        console.log('ERROR in "makePlacesRequest"');
-        console.log(error);
-      });
+    // axios.get('https://maps.googleapis.com/maps/api/geocode/json?', {
+    //   params: {
+    //     address: searchString.trim().replace(" ", "+"),
+    //     key: GP_API_KEY,
+    //   }
+    // }).then(function (response) {
+    //     /*The 0 may need to change depending on how the API returns this array*/
+    //     //const loc = response.data.results[0].geometry.location;
+    //     //setSearchLocation([loc.lat, loc.lng]);
+    setSearchLocation([38.070591, -78.44631099999]); //hardcode cville location
+    // })
+    // .catch(function(error) {
+    //   console.log('ERROR in "makePlacesRequest"');
+    //   console.log(error);
+    // });
 
     getNearByRestaurants();
   };
 
   const getNearByRestaurants = () => {
-    axios
-      .get(
-        "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?",
-        {
-          params: {
-            location: searchLocation[0] + "," + searchLocation[1],
-            radius: searchRadius,
-            type: "restaurant",
-            opennow: true,
-            key: GP_API_KEY
-          }
-        }
-      )
-      .then(function(response) {
-        setAllRestaurants(response.data.results);
-        console.log(allRestaurants);
-      });
+  //   axios.get(
+  //     "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?",
+  //     {
+  //       params: {
+  //         location: searchLocation[0] + "," + searchLocation[1],
+  //         radius: searchRadius,
+  //         type: "restaurant",
+  //         opennow: true,
+  //         key: GP_API_KEY
+  //       }
+  //     }
+  //   ).then(function (response) {
+
+      // setAllRestaurants(response.data.results);
+      
+      //temp data
+      setAllRestaurants(dummyData.results);
+      console.log(allRestaurants);
+    // });
   };
 
-  const handleSelect = async value => {};
+  const handleSelect = async value => { };
 
   return (
     <Row>
