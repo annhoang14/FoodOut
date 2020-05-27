@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 import { Row, Col, Input } from "antd";
 
@@ -34,75 +34,135 @@ function App() {
       isOpen: true,
       location: "100 Totally Real St, Charlottesville, VA, 22903",
       rating: 1.0,
-      price: '$',
+      price: "$",
       id: 2
-    },
+    }
   ]);
+
+  //sort by rating (high to low)
+  const highToLow = arr => {
+    let newArray = arr.slice();
+    newArray.sort((a, b) => {
+      return b.rating - a.rating;
+    });
+    setAllRestaurants(newArray);
+  };
+
+  //sort by rating (low to high)
+  const lowToHigh = arr => {
+    let newArray = arr.slice();
+    newArray.sort((a, b) => {
+      return a.rating - b.rating;
+    });
+    setAllRestaurants(newArray);
+  };
+
+  //removes spaces from strings and makes lowercase
+  const cleanUp = str => {
+    return str.replace(/\s/g, "").toLowerCase();
+  };
+
+  //sort by name (a-z)
+  const aToZ = arr => {
+    let newArray = arr.slice();
+    newArray.sort((a, b) => {
+      if (cleanUp(a.name) > cleanUp(b.name)) {
+        return 1;
+      } else if (cleanUp(a.name) < cleanUp(b.name)) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+    setAllRestaurants(newArray);
+  };
+
+  //sort by name (za)
+  const zToA = arr => {
+    let newArray = arr.slice();
+    newArray.sort((a, b) => {
+      if (cleanUp(a.name) > cleanUp(b.name)) {
+        return 1;
+      } else if (cleanUp(a.name) < cleanUp(b.name)) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+    newArray.reverse();
+    setAllRestaurants(newArray);
+  };
+
   const [searchLocation, setSearchLocation] = React.useState([0, 0]); //[lat, long]
   const [searchRadius, setSearchRadius] = React.useState(50000); //radius
 
-  const clog = toPrint => {
-    console.log(toPrint)
-  }
-
-  const axios = require('axios');
+  const axios = require("axios");
 
   /*.env key hiding not working yet*/
   // const GP_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
   const GP_API_KEY = "hee-hee";
 
-  const makePlacesRequest = (searchString) => {
-    axios.get('https://maps.googleapis.com/maps/api/geocode/json?', {
-      params: {
-        address: searchString.trim().replace(" ", "+"),
-        key: GP_API_KEY,
-      }
-    })
-      .then(function (response) {
-        clog(process.env.GOOGLE_PLACES_API_KEY);
-        clog(GP_API_KEY);
-        clog(response);
+  const makePlacesRequest = searchString => {
+    axios
+      .get("https://maps.googleapis.com/maps/api/geocode/json?", {
+        params: {
+          address: searchString.trim().replace(" ", "+"),
+          key: GP_API_KEY
+        }
+      })
+      .then(function(response) {
         /*The 0 may need to change depending on how the API returns this array*/
         const loc = response.data.results[0].geometry.location;
         setSearchLocation([loc.lat, loc.lng]);
       })
-      .catch(function (error) {
-        console.log("ERROR in \"makePlacesRequest\"")
+      .catch(function(error) {
+        console.log('ERROR in "makePlacesRequest"');
         console.log(error);
-      })
+      });
 
     getNearByRestaurants();
-  }
+  };
 
   const getNearByRestaurants = () => {
-    axios.get("https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?", {
-      params: {
-        location: searchLocation[0] + "," + searchLocation[1],
-        radius: searchRadius,
-        type: "restaurant",
-        opennow: true,
-        key: GP_API_KEY
-      }
-    })
-      .then(function (response) {
+    axios
+      .get(
+        "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?",
+        {
+          params: {
+            location: searchLocation[0] + "," + searchLocation[1],
+            radius: searchRadius,
+            type: "restaurant",
+            opennow: true,
+            key: GP_API_KEY
+          }
+        }
+      )
+      .then(function(response) {
         setAllRestaurants(response.data.results);
-        console.log(allRestaurants)
-      })
-  }
+        console.log(allRestaurants);
+      });
+  };
 
-  const handleSelect = async (value) => { }
+  const handleSelect = async value => {};
 
   return (
     <Row>
       <Col span={2}>
-        <Filter />
+        <Filter
+          allRestaurants={allRestaurants}
+          highToLow={highToLow}
+          lowToHigh={lowToHigh}
+          aToZ={aToZ}
+          zToA={zToA}
+          cleanup={cleanUp}
+        />
       </Col>
       <Col span={10}>
         <Search
           placeholder="input search text"
           size="large"
           id="userSearch"
-          onSearch={(searchString) => {
+          onSearch={searchString => {
             makePlacesRequest(searchString);
           }}
           enterButton
@@ -113,7 +173,7 @@ function App() {
         <MapDisplay allRestaurants={allRestaurants} />
       </Col>
     </Row>
-  )
+  );
 }
 
 export default App;

@@ -1,45 +1,27 @@
-import React from 'react'
-import { render } from '@testing-library/react'
-import { Menu, Dropdown } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import React from "react";
+import { render } from "@testing-library/react";
+import { Menu, Dropdown } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 
-const Filter = () => {
+const Filter = props => {
+  const { allRestaurants, highToLow, lowToHigh, aToZ, zToA } = props;
 
-    // //sort by rating (low to high)
-    // lowToHigh = (arr) => {
-    //     sorted = arr.sort((a,b) => {
-    //       return a.rating - b.rating;
-    //     }); return sorted;
-    //   }
-    // //sort by rating (high to low)
-    // highToLow = (arr) => {
-    //     sorted = arr.sort((a,b) => {
-    //       return b.rating - a.rating;
-    //     }); return sorted;
-    //   }
-    //sort by name (a-z)
-
-    //sort by name (za)
-
-    return(
+  return (
     <Menu>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
-          1st filter item
-        </a>
+        <a onClick={() => highToLow(allRestaurants)}>Highest Rating</a>
       </Menu.Item>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
-          2nd menu item
-        </a>
+        <a onClick={() => lowToHigh(allRestaurants)}>Lowest Rating</a>
       </Menu.Item>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
-          3rd filter item
-        </a>
+        <a onClick={() => aToZ(allRestaurants)}>Sort by Name (A-Z)</a>
+      </Menu.Item>
+      <Menu.Item>
+        <a onClick={() => zToA(allRestaurants)}>Sort by Name (Z-A)</a>
       </Menu.Item>
     </Menu>
-    );
-}
+  );
+};
 
 export default Filter;
