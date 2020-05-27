@@ -1,9 +1,9 @@
 import React from "react";
 
 import "antd/dist/antd.css";
-import { Layout, Typography } from "antd";
+import { Layout } from "antd";
 
-import App from "./App.js"
+import App from "../App.js"
 import "./layout.css";
 
 const { Header, Content, Footer } = Layout;
