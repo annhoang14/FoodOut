@@ -4,21 +4,27 @@ import { Menu, Dropdown } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 
 const Filter = props => {
-  const { allRestaurants, highToLow, lowToHigh, aToZ, zToA } = props;
+  const { allRestaurants, highRating, lowRating, aToZ, zToA, highPrice, lowPrice } = props;
 
   return (
     <Menu>
       <Menu.Item>
-        <a onClick={() => highToLow(allRestaurants)}>Highest Rating</a>
+        <a onClick={() => highRating(allRestaurants)}>Highest Rating</a>
       </Menu.Item>
       <Menu.Item>
-        <a onClick={() => lowToHigh(allRestaurants)}>Lowest Rating</a>
+        <a onClick={() => lowRating(allRestaurants)}>Lowest Rating</a>
       </Menu.Item>
       <Menu.Item>
-        <a onClick={() => aToZ(allRestaurants)}>Sort by Name (A-Z)</a>
+        <a onClick={() => aToZ(allRestaurants)}>Name (A-Z)</a>
       </Menu.Item>
       <Menu.Item>
-        <a onClick={() => zToA(allRestaurants)}>Sort by Name (Z-A)</a>
+        <a onClick={() => zToA(allRestaurants)}>Name (Z-A)</a>
+      </Menu.Item>
+      <Menu.Item>
+        <a onClick={() => highPrice(allRestaurants)}>Highest Price</a>
+      </Menu.Item>
+      <Menu.Item>
+        <a onClick={() => lowPrice(allRestaurants)}>Lowest Price</a>
       </Menu.Item>
     </Menu>
   );

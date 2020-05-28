@@ -10,7 +10,48 @@ const { Search } = Input;
 
 function App() {
   const [allRestaurants, setAllRestaurants] = useState([
-    //Commented out cuz locations are not coordinates --> Let's have a home page when list in a 0
+    {
+      name: "Fake Restaurant",
+      type: "bar",
+      isOpen: false,
+      address: "10000 Some Rd, Charlottesville, Va 22903",
+      rating: 5,
+      price: "$$$$$",
+      "geometry": {
+        "location": {
+            "lat": 38.0821088,
+            "lng": -78.47446990000002
+        },
+      id: 0
+    }},
+    {
+      name: "Silk Thai",
+      type: "restaurant",
+      isOpen: true,
+      address: "11010 Sudley Manor Dr, Manassas, VA 20109",
+      rating: 3.8,
+      price: "$$",
+      "geometry": {
+        "location": {
+            "lat": 39.0821088,
+            "lng": -77.47446990000002
+        },
+      id: 1
+    }},
+    {
+      name: "Real Restaurant",
+      type: "buffet",
+      isOpen: true,
+      address: "100 Totally Real St, Charlottesville, VA, 22903",
+      rating: 1.0,
+      price: "$",
+      "geometry": {
+        "location": {
+            "lat": 32.0821088,
+            "lng": -79.47446990000002
+        },
+      id: 2
+    }},
   ]);
   const [searchLocation, setSearchLocation] = React.useState([38.033554, -78.507980]); //starts at CVille
   const [searchRadius, setSearchRadius] = React.useState(3000); //radius
@@ -21,7 +62,7 @@ function App() {
 
 
   //sort by rating (high to low)
-  const highToLow = arr => {
+  const highRating = arr => {
     let newArray = arr.slice();
     newArray.sort((a, b) => {
       return b.rating - a.rating;
@@ -30,13 +71,31 @@ function App() {
   };
 
   //sort by rating (low to high)
-  const lowToHigh = arr => {
+  const lowRating = arr => {
     let newArray = arr.slice();
     newArray.sort((a, b) => {
       return a.rating - b.rating;
     });
     setAllRestaurants(newArray);
   };
+
+  //sort by price (high to low)
+  const highPrice = arr => {
+    let newArray = arr.slice();
+    newArray.sort((a, b) => {
+      return b.price.length - a.price.length;
+    });
+    setAllRestaurants(newArray);
+  };
+
+    //sort by price (low to high)
+    const lowPrice = arr => {
+      let newArray = arr.slice();
+      newArray.sort((a, b) => {
+        return a.price.length - b.price.length;
+      });
+      setAllRestaurants(newArray);
+    };
 
   //removes spaces from strings and makes lowercase
   const cleanUp = str => {
@@ -73,6 +132,35 @@ function App() {
     newArray.reverse();
     setAllRestaurants(newArray);
   };
+
+//computes distance between a restaurant and user location.
+//accepts data in the form of (restaurants, searchLocation)
+const computeDist = (a,b) => {
+  const R = 6371e3; // metres
+  const lat1 = a.geometry.location.lat;
+  const lat2 = b[0];
+  const lon1 = a.geometry.location.lng;
+  const lon2 = b[1];
+  const φ1 = lat1 * Math.PI/180; // φ, λ in radians
+  const φ2 = lat2 * Math.PI/180;
+  const Δφ = (lat2-lat1) * Math.PI/180;
+  const Δλ = (lon2-lon1) * Math.PI/180;
+  const d = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+          Math.cos(φ1) * Math.cos(φ2) *
+          Math.sin(Δλ/2) * Math.sin(Δλ/2);
+  const c = 2 * Math.atan2(Math.sqrt(d), Math.sqrt(1-d));
+  const distMeters = R * c; // in metres
+  return distMeters / 1609 // in miles
+}
+
+
+
+  const [searchLocation, setSearchLocation] = React.useState([0, 0]); //[lat, long]
+  const [searchRadius, setSearchRadius] = React.useState(50000); //radius
+
+  const axios = require("axios");
+
+  const GP_API_KEY = process.env.REACT_APP_GOOGLE_PLACES_API_KEY;
 
   const makePlacesRequest = (searchString) => {
     axios.get('https://maps.googleapis.com/maps/api/geocode/json?', {
@@ -124,8 +212,10 @@ function App() {
       <Col span={2}>
         <Filter
           allRestaurants={allRestaurants}
-          highToLow={highToLow}
-          lowToHigh={lowToHigh}
+          highRating={highRating}
+          lowRating={lowRating}
+          highPrice={highPrice}
+          lowPrice={lowPrice}
           aToZ={aToZ}
           zToA={zToA}
           cleanup={cleanUp}

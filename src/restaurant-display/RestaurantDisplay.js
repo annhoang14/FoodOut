@@ -31,7 +31,7 @@ const RestaurantCard = (props) => {
         style={{ width: 300 }} >
         <p>Location: <em>{restaurant.vicinity}</em></p>
         <p>Rating: {restaurant.rating}</p>
-        <p>Price Level: {"$".repeat(restaurant.price_level)}</p>
+        <p>Price Level: {"$".repeat(restaurant.price.length)}</p>
       </Card>
     </div>
   )
