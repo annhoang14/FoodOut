@@ -10,34 +10,15 @@ const { Search } = Input;
 
 function App() {
   const [allRestaurants, setAllRestaurants] = useState([
-    {
-      name: "Fake Restaurant",
-      type: "bar",
-      isOpen: false,
-      location: "10000 Some Rd, Charlottesville, Va 22903",
-      rating: 5,
-      price: "$$$$$",
-      id: 0
-    },
-    {
-      name: "Silk Thai",
-      type: "restaurant",
-      isOpen: true,
-      location: "11010 Sudley Manor Dr, Manassas, VA 20109",
-      rating: 3.8,
-      price: "$$",
-      id: 1
-    },
-    {
-      name: "Real Restaurant",
-      type: "buffet",
-      isOpen: true,
-      location: "100 Totally Real St, Charlottesville, VA, 22903",
-      rating: 1.0,
-      price: "$",
-      id: 2
-    }
+    //Commented out cuz locations are not coordinates --> Let's have a home page when list in a 0
   ]);
+  const [searchLocation, setSearchLocation] = React.useState([38.033554, -78.507980]); //starts at CVille
+  const [searchRadius, setSearchRadius] = React.useState(3000); //radius
+
+  const axios = require("axios");
+
+  const GP_API_KEY = process.env.REACT_APP_GOOGLE_PLACES_API_KEY;
+
 
   //sort by rating (high to low)
   const highToLow = arr => {
@@ -93,13 +74,6 @@ function App() {
     setAllRestaurants(newArray);
   };
 
-  const [searchLocation, setSearchLocation] = React.useState([0, 0]); //[lat, long]
-  const [searchRadius, setSearchRadius] = React.useState(50000); //radius
-
-  const axios = require("axios");
-
-  const GP_API_KEY = process.env.REACT_APP_GOOGLE_PLACES_API_KEY;
-
   const makePlacesRequest = (searchString) => {
     axios.get('https://maps.googleapis.com/maps/api/geocode/json?', {
       params: {
@@ -109,11 +83,11 @@ function App() {
     })
       .then(function (response) {
         /*The 0 may need to change depending on how the API returns this array*/
-        //const loc = response.data.results[0].geometry.location;
-        //setSearchLocation([loc.lat, loc.lng]);
-        setSearchLocation([38.070591, -78.44631099999]); //hardcode cville location
+        const loc = response.data.results[0].geometry.location;
+        setSearchLocation([loc.lat, loc.lng]);
+        //setSearchLocation([38.070591, -78.44631099999]); //hardcode cville location
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log('ERROR in "makePlacesRequest"');
         console.log(error);
       });
@@ -135,13 +109,15 @@ function App() {
           }
         }
       )
-      .then(function(response) {
+      .then(function (response) {
         setAllRestaurants(response.data.results);
         console.log(allRestaurants);
+      }).catch(function (error) {
+        console.log('ERROR in "getNearByRestaurants"');
+        console.log(error);
       });
-  };
 
-  const handleSelect = async value => {};
+  };
 
   return (
     <Row>
@@ -168,7 +144,7 @@ function App() {
         <RestaurantDisplay allRestaurants={allRestaurants} />
       </Col>
       <Col span={12}>
-        <MapDisplay allRestaurants={allRestaurants} />
+        <MapDisplay allRestaurants={allRestaurants} searchLocation={searchLocation} />
       </Col>
     </Row>
   );
