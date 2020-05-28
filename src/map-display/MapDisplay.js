@@ -5,7 +5,7 @@ import L from 'leaflet';
 
 import './MapDisplay.css';
 
-const MapDisplay = ({ allRestaurants, searchLocation }) => {
+const MapDisplay = ({ allRestaurants }) => {
   const [mapObj, setMapObj] = React.useState();
 
   React.useEffect(() => {
