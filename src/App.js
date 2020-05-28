@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 
-import { Row, Col, Input } from "antd";
+import { Row, Col, Input, Typography } from "antd";
 
 import RestaurantDisplay from "./restaurant-display/RestaurantDisplay.js";
 import MapDisplay from "./map-display/MapDisplay.js";
 import Filter from "./Filter.js";
 
+import "./App.css"
 import dummyData from './dummyCvilleSearch'
 
+const { Title } = Typography;
 const { Search } = Input;
 
 function App() {
@@ -16,29 +18,29 @@ function App() {
       name: "Fake Restaurant",
       type: "bar",
       isOpen: false,
-      location: "10000 Some Rd, Charlottesville, Va 22903",
+      vicinity: "10000 Some Rd, Charlottesville, Va 22903",
       rating: 5,
-      price: "$$$$$",
+      price_level: 5,
       id: 0
     },
     {
       name: "Silk Thai",
       type: "restaurant",
       isOpen: true,
-      location: "11010 Sudley Manor Dr, Manassas, VA 20109",
+      vicinity: "11010 Sudley Manor Dr, Manassas, VA 20109",
       rating: 3.8,
-      price: "$$",
+      price_level: 2,
       id: 1
     },
-    {
-      name: "Real Restaurant",
-      type: "buffet",
-      isOpen: true,
-      location: "100 Totally Real St, Charlottesville, VA, 22903",
-      rating: 1.0,
-      price: "$",
-      id: 2
-    }
+    // {
+    //   name: "Real Restaurant",
+    //   type: "buffet",
+    //   isOpen: true,
+    //   vicinity: "100 Totally Real St, Charlottesville, VA, 22903",
+    //   rating: 1.0,
+    //   price_level: 1,
+    //   id: 2
+    // }
   ]);
 
   //sort by rating (high to low)
@@ -147,8 +149,8 @@ function App() {
   const handleSelect = async value => { };
 
   return (
-    <Row>
-      <Col span={2}>
+    <Row gutter={16} className="make-row-vert-span">
+      {/* <Col span={2}>
         <Filter
           allRestaurants={allRestaurants}
           highToLow={highToLow}
@@ -157,20 +159,24 @@ function App() {
           zToA={zToA}
           cleanup={cleanUp}
         />
-      </Col>
-      <Col span={10}>
-        <Search
-          placeholder="input search text"
-          size="large"
-          id="userSearch"
-          onSearch={searchString => {
-            makePlacesRequest(searchString);
-          }}
-          enterButton
-        />
+      </Col> */}
+      <Col span={11} className="make-col-vert-span">
+        <Title level={2}>Enter your location</Title>
+        <div className="sticky-search">
+          <Search
+            placeholder="input search text"
+            size="large"
+            id="userSearch"
+            onSearch={searchString => {
+              makePlacesRequest(searchString);
+            }}
+            enterButton
+          />
+        </div>
+        <Title level={2} style={{marginTop: "15px"}}>Restaurants Near You</Title>
         <RestaurantDisplay allRestaurants={allRestaurants} />
       </Col>
-      <Col span={12}>
+      <Col span={13}>
         <MapDisplay allRestaurants={allRestaurants} />
       </Col>
     </Row>

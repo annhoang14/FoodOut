@@ -10,16 +10,16 @@ const { Header, Content, Footer } = Layout;
 
 function AppLayout() {
   return (
-    <Layout className="layout">
+    <Layout className="whole-layout">
       <Header>
         <h2 className="logo">Food Out! (temp name)</h2>
       </Header>
-      <Content style={{ padding: '20px 50px 0 50px' }}>
+      <Content style={{ padding: '20px 50px 20px 50px' }}>
         <div className="site-layout-content">
           <App />
         </div>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+      {/* <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer> */}
     </Layout>
   )
 }

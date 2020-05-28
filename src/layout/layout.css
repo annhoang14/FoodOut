@@ -1,6 +1,12 @@
+.whole-layout{
+  height: 100vh;
+  max-height: 100vh;
+}
+
 .site-layout-content {
   background: #fff;
   padding: 24px;
+  height: 100%;
   min-height: 280px;
 }
 
