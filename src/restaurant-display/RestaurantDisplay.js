@@ -1,39 +1,40 @@
 import React from "react";
 
-import { Card } from "antd";
+import { Card, Typography } from "antd";
 
 import "./RestaurantDisplay.css"
 
+const { Title } = Typography;
+
 const RestaurantDisplay = (props) => {
-  const {allRestaurants} = props;
+  const { allRestaurants } = props;
 
   return (
-    <div>
-      <h1>List o' Resaurants</h1>
+    <div className="card-holder-holder">
+      <div className="site-card-border-less-wrapper">
         {allRestaurants.map((restaurant, index) => {
           return (
             <RestaurantCard key={index} restaurant={restaurant}/>
           );
         })}
+      </div>
     </div>
   )
 }
 
 const RestaurantCard = (props) => {
-  const {restaurant} = props;
+  const { restaurant } = props;
 
   return (
-    <div className="site-card-border-less-wrapper">
       <Card
-        title={restaurant.name}
+        className="restaurant-card"
         size="small"
-        extra={<a href="#">More</a>}
-        style={{ width: 300 }} >
-        <p>Location: <em>{restaurant.vicinity}</em></p>
-        <p>Rating: {restaurant.rating}</p>
-        <p>Price Level: {"$".repeat(restaurant.price.length)}</p>
+        title={restaurant.name}
+        extra={<a href="#">More</a>} >
+        <p className="card-text"><em>{restaurant.vicinity}</em></p>
+        <p className="card-text">Rating: {restaurant.rating}</p>
+        <p className="card-text">Price Level: {"$".repeat(restaurant.price_level)}</p>
       </Card>
-    </div>
   )
 }
 
