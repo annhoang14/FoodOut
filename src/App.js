@@ -178,7 +178,7 @@ function App() {
                 />
               </Menu>
             } 
-            trigger={['hover', 'click']}
+            trigger={['click']}
             placement="bottomRight"
           >
             <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
