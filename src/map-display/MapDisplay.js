@@ -5,13 +5,13 @@ import L from 'leaflet';
 
 import './MapDisplay.css';
 
-import { RESTAURANTS } from "../restaurant-display/allRestaurants.js";
+const MapDisplay = ({ allRestaurants, searchLocation }) => {
+  const [mapObj, setMapObj] = React.useState();
 
-const MapDisplay = ({ allRestaurants }) => {
   React.useEffect(() => {
     // create map
-    const mapObj = L.map('mapid', {
-      center: [38.033554, -78.507980],
+    setMapObj(L.map('mapid', {
+      center: [38.033554, -78.507980], //centered on Cville
       zoom: 16,
       layers: [
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -19,8 +19,11 @@ const MapDisplay = ({ allRestaurants }) => {
             '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         }),
       ]
-    });
+    })
+    )
+  }, []);
 
+  React.useEffect(() => {
     var markerIcon = L.icon({
       iconUrl: require('leaflet/dist/images/marker-icon.png'),
       iconSize: [20, 40],
@@ -28,22 +31,19 @@ const MapDisplay = ({ allRestaurants }) => {
       shadowSize: [10, 20],
     });
 
-    //list of hard coded restaurants (TO BE DELETED)!!!!!!!!!!!
-    let restaurants = RESTAURANTS[0].results;
-    //loop thro each restaurant and make a popUp for each
-    for (let i = 0; i < restaurants.length; i++) {
-      let restaurant = restaurants[i]
+    //loop thro each nearby restaurant and make a popUp for each
+    for (let i = 0; i < allRestaurants.length; i++) {
+      let restaurant = allRestaurants[i]
       let geometry = restaurant.geometry.location;
       let lat = geometry.lat;
       let long = geometry.lng;
       var marker = L.marker([lat, long],
         { icon: markerIcon })
         .addTo(mapObj);
-      let name = restaurants.name
-      console.log(name)
+      let name = restaurant.name
       marker.bindPopup("<p>" + name + "</p>").openPopup();
     }
-  }, []);
+  }, [allRestaurants])
 
   return <div id="mapid"></div>
 }
