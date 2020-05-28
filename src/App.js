@@ -12,7 +12,7 @@ function App() {
   const [allRestaurants, setAllRestaurants] = useState([
     //Commented out cuz locations are not coordinates --> Let's have a home page when list in a 0
   ]);
-  const [searchLocation, setSearchLocation] = React.useState([38.033554, -78.507980]); //starts at CVille
+  const [searchLocation, setSearchLocation] = React.useState([0, 0]); //starts at CVille
   const [searchRadius, setSearchRadius] = React.useState(3000); //radius
 
   const axios = require("axios");

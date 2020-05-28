@@ -23,12 +23,6 @@ const MapDisplay = ({ allRestaurants, searchLocation }) => {
     )
   }, []);
 
-  // React.useEffect(() => {
-  //   if (mapObj) {
-  //     mapObj.panTo(searchLocation, 16, { animate: true })
-  //   }
-  // }, [searchLocation])
-
   React.useEffect(() => {
     var markerIcon = L.icon({
       iconUrl: require('leaflet/dist/images/marker-icon.png'),
@@ -49,7 +43,7 @@ const MapDisplay = ({ allRestaurants, searchLocation }) => {
       let name = restaurant.name
       marker.bindPopup("<p>" + name + "</p>").openPopup();
     }
-  }, [allRestaurants, searchLocation])
+  }, [allRestaurants])
 
   return <div id="mapid"></div>
 }
