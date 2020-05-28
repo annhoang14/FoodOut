@@ -53,6 +53,13 @@ function App() {
       id: 2
     }},
   ]);
+  const [searchLocation, setSearchLocation] = React.useState([38.033554, -78.507980]); //starts at CVille
+  const [searchRadius, setSearchRadius] = React.useState(3000); //radius
+
+  const axios = require("axios");
+
+  const GP_API_KEY = process.env.REACT_APP_GOOGLE_PLACES_API_KEY;
+
 
   //sort by rating (high to low)
   const highRating = arr => {
@@ -164,11 +171,11 @@ const computeDist = (a,b) => {
     })
       .then(function (response) {
         /*The 0 may need to change depending on how the API returns this array*/
-        //const loc = response.data.results[0].geometry.location;
-        //setSearchLocation([loc.lat, loc.lng]);
-        setSearchLocation([38.070591, -78.44631099999]); //hardcode cville location
+        const loc = response.data.results[0].geometry.location;
+        setSearchLocation([loc.lat, loc.lng]);
+        //setSearchLocation([38.070591, -78.44631099999]); //hardcode cville location
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log('ERROR in "makePlacesRequest"');
         console.log(error);
       });
@@ -179,7 +186,7 @@ const computeDist = (a,b) => {
   const getNearByRestaurants = () => {
     axios
       .get(
-        "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?",
+        "https://maps.googleapis.com/maps/api/place/nearbysearch/json?",
         {
           params: {
             location: searchLocation[0] + "," + searchLocation[1],
@@ -190,13 +197,15 @@ const computeDist = (a,b) => {
           }
         }
       )
-      .then(function(response) {
+      .then(function (response) {
         setAllRestaurants(response.data.results);
         console.log(allRestaurants);
+      }).catch(function (error) {
+        console.log('ERROR in "getNearByRestaurants"');
+        console.log(error);
       });
-  };
 
-  const handleSelect = async value => {};
+  };
 
   return (
     <Row>
@@ -225,7 +234,7 @@ const computeDist = (a,b) => {
         <RestaurantDisplay allRestaurants={allRestaurants} />
       </Col>
       <Col span={12}>
-        <MapDisplay allRestaurants={allRestaurants} />
+        <MapDisplay allRestaurants={allRestaurants} searchLocation={searchLocation} />
       </Col>
     </Row>
   );
