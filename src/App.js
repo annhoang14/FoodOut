@@ -111,7 +111,7 @@ function App() {
       )
       .then(function (response) {
         setAllRestaurants(response.data.results);
-        console.log(allRestaurants);
+        //console.log(allRestaurants);
       }).catch(function (error) {
         console.log('ERROR in "getNearByRestaurants"');
         console.log(error);
