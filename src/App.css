@@ -24,3 +24,10 @@
 
   padding: 3px 0 10px 0;
 }
+
+.near-you-header {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+}

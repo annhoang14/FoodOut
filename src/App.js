@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-import { Row, Col, Input, Typography } from "antd";
+import { Row, Col, Input, Typography, Dropdown, Menu} from "antd";
+import { DownOutlined } from '@ant-design/icons';
 
 import RestaurantDisplay from "./restaurant-display/RestaurantDisplay.js";
 import MapDisplay from "./map-display/MapDisplay.js";
@@ -150,16 +151,6 @@ function App() {
 
   return (
     <Row gutter={16} className="make-row-vert-span">
-      {/* <Col span={2}>
-        <Filter
-          allRestaurants={allRestaurants}
-          highToLow={highToLow}
-          lowToHigh={lowToHigh}
-          aToZ={aToZ}
-          zToA={zToA}
-          cleanup={cleanUp}
-        />
-      </Col> */}
       <Col span={11} className="make-col-vert-span">
         <Title level={2}>Enter your location</Title>
         <div className="sticky-search">
@@ -173,7 +164,28 @@ function App() {
             enterButton
           />
         </div>
-        <Title level={2} style={{marginTop: "15px"}}>Restaurants Near You</Title>
+        <div className="near-you-header">
+          <Title level={2} style={{marginTop: "15px"}}>Restaurants Near You</Title>
+          <Dropdown overlay={
+              <Menu>
+                <Filter
+                  allRestaurants={allRestaurants}
+                  highToLow={highToLow}
+                  lowToHigh={lowToHigh}
+                  aToZ={aToZ}
+                  zToA={zToA}
+                  cleanup={cleanUp}
+                />
+              </Menu>
+            } 
+            trigger={['hover', 'click']}
+            placement="bottomRight"
+          >
+            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+              Filter by <DownOutlined />
+            </a>
+          </Dropdown>
+        </div>
         <RestaurantDisplay allRestaurants={allRestaurants} />
       </Col>
       <Col span={13}>
