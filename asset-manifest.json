@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/foodout/static/css/main.66a04c89.chunk.css",
-    "main.js": "/foodout/static/js/main.cf62e6e6.chunk.js",
-    "main.js.map": "/foodout/static/js/main.cf62e6e6.chunk.js.map",
-    "runtime-main.js": "/foodout/static/js/runtime-main.54b3ca04.js",
-    "runtime-main.js.map": "/foodout/static/js/runtime-main.54b3ca04.js.map",
-    "static/css/2.c36bc9e8.chunk.css": "/foodout/static/css/2.c36bc9e8.chunk.css",
-    "static/js/2.d5d64f67.chunk.js": "/foodout/static/js/2.d5d64f67.chunk.js",
-    "static/js/2.d5d64f67.chunk.js.map": "/foodout/static/js/2.d5d64f67.chunk.js.map",
-    "index.html": "/foodout/index.html",
-    "precache-manifest.8e2e013ebb20827a0e449bc8f36fd1d7.js": "/foodout/precache-manifest.8e2e013ebb20827a0e449bc8f36fd1d7.js",
-    "service-worker.js": "/foodout/service-worker.js",
-    "static/css/2.c36bc9e8.chunk.css.map": "/foodout/static/css/2.c36bc9e8.chunk.css.map",
-    "static/css/main.66a04c89.chunk.css.map": "/foodout/static/css/main.66a04c89.chunk.css.map",
-    "static/js/2.d5d64f67.chunk.js.LICENSE.txt": "/foodout/static/js/2.d5d64f67.chunk.js.LICENSE.txt",
-    "static/media/restaurant.svg": "/foodout/static/media/restaurant.6b6405b5.svg"
+    "main.css": "/FoodOut/static/css/main.66a04c89.chunk.css",
+    "main.js": "/FoodOut/static/js/main.dbaebbad.chunk.js",
+    "main.js.map": "/FoodOut/static/js/main.dbaebbad.chunk.js.map",
+    "runtime-main.js": "/FoodOut/static/js/runtime-main.999826ec.js",
+    "runtime-main.js.map": "/FoodOut/static/js/runtime-main.999826ec.js.map",
+    "static/css/2.c36bc9e8.chunk.css": "/FoodOut/static/css/2.c36bc9e8.chunk.css",
+    "static/js/2.c4432234.chunk.js": "/FoodOut/static/js/2.c4432234.chunk.js",
+    "static/js/2.c4432234.chunk.js.map": "/FoodOut/static/js/2.c4432234.chunk.js.map",
+    "index.html": "/FoodOut/index.html",
+    "precache-manifest.39be5239bcb70191b9ebf9900db736db.js": "/FoodOut/precache-manifest.39be5239bcb70191b9ebf9900db736db.js",
+    "service-worker.js": "/FoodOut/service-worker.js",
+    "static/css/2.c36bc9e8.chunk.css.map": "/FoodOut/static/css/2.c36bc9e8.chunk.css.map",
+    "static/css/main.66a04c89.chunk.css.map": "/FoodOut/static/css/main.66a04c89.chunk.css.map",
+    "static/js/2.c4432234.chunk.js.LICENSE.txt": "/FoodOut/static/js/2.c4432234.chunk.js.LICENSE.txt",
+    "static/media/restaurant.svg": "/FoodOut/static/media/restaurant.6b6405b5.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.54b3ca04.js",
+    "static/js/runtime-main.999826ec.js",
     "static/css/2.c36bc9e8.chunk.css",
-    "static/js/2.d5d64f67.chunk.js",
+    "static/js/2.c4432234.chunk.js",
     "static/css/main.66a04c89.chunk.css",
-    "static/js/main.cf62e6e6.chunk.js"
+    "static/js/main.dbaebbad.chunk.js"
   ]
 }
