@@ -95,25 +95,41 @@ function App() {
     setAllRestaurants(newArray);
   };
 
-  //computes distance between a restaurant and user location.
-  //accepts data in the form of (restaurants, searchLocation)
-  const computeDist = (a, b) => {
-    const R = 6371e3; // metres
-    const lat1 = a.geometry.location.lat;
-    const lat2 = b[0];
-    const lon1 = a.geometry.location.lng;
-    const lon2 = b[1];
-    const φ1 = lat1 * Math.PI / 180; // φ, λ in radians
-    const φ2 = lat2 * Math.PI / 180;
-    const Δφ = (lat2 - lat1) * Math.PI / 180;
-    const Δλ = (lon2 - lon1) * Math.PI / 180;
-    const d = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+  //Farthest away function
+  const far = arr => {
+    for(var i=0;i<allRestaurants.length;i++) {
+      const R = 6371e3; // metres
+      const lat1 = allRestaurants[i].geometry.location.lat;
+      const lat2 = searchLocation[0];
+      const lon1 = allRestaurants[i].geometry.location.lng;
+      const lon2 = searchLocation[1];
+      const φ1 = lat1 * Math.PI / 180; // φ, λ in radians
+      const φ2 = lat2 * Math.PI / 180;
+      const Δφ = (lat2 - lat1) * Math.PI / 180;
+      const Δλ = (lon2 - lon1) * Math.PI / 180;
+      const d = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
       Math.cos(φ1) * Math.cos(φ2) *
       Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-    const c = 2 * Math.atan2(Math.sqrt(d), Math.sqrt(1 - d));
-    const distMeters = R * c; // in metres
-    return distMeters / 1609 // in miles
+      const c = 2 * Math.atan2(Math.sqrt(d), Math.sqrt(1 - d));
+      const distMeters = R * c; // in metres
+      allRestaurants.push(distMeters);
+    }
+    let newArray = arr.slice();
+    newArray.sort((a, b) => {
+      return b.distMeters - a.distMeters;
+    });
+    setAllRestaurants(newArray);
   }
+
+
+  //sorts by farthest distance
+  const close = arr => {
+    let newArray = arr.slice();
+    newArray.sort((a, b) => {
+      return a.distMeters - b.distMeters;
+    });
+    setAllRestaurants(newArray);
+  };
 
   const makePlacesRequest = (searchString) => {
     axios.get('https://maps.googleapis.com/maps/api/geocode/json?', {
@@ -188,6 +204,7 @@ function App() {
                 aToZ={aToZ}
                 zToA={zToA}
                 cleanup={cleanUp}
+                far={far}
               />
             </Menu>
           }
