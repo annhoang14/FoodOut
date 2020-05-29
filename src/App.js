@@ -8,7 +8,6 @@ import MapDisplay from "./map-display/MapDisplay.js";
 import Filter from "./Filter.js";
 
 import "./App.css"
-import dummyData from './dummyCvilleSearch'
 
 const { Title } = Typography;
 const { Search } = Input;
@@ -129,8 +128,8 @@ function App() {
         //setSearchLocation([38.070591, -78.44631099999]); //hardcode cville location
       })
       .catch(function (error) {
-        console.log('ERROR in "makePlacesRequest"');
-        console.log(error);
+        // console.log('ERROR in "makePlacesRequest"');
+        // console.log(error);
       });
 
     getNearByRestaurants();
@@ -154,8 +153,8 @@ function App() {
         setAllRestaurants(response.data.results);
         //console.log(allRestaurants);
       }).catch(function (error) {
-        console.log('ERROR in "getNearByRestaurants"');
-        console.log(error);
+        // console.log('ERROR in "getNearByRestaurants"');
+        // console.log(error);
       });
 
   };
