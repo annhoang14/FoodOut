@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Row, Col, Input, Typography, Dropdown, Menu } from "antd";
+import { Row, Col, Input, Typography, Dropdown, Menu, AutoComplete, Select } from "antd";
 import { DownOutlined } from '@ant-design/icons';
 
 import RestaurantDisplay from "./restaurant-display/RestaurantDisplay.js";
@@ -12,12 +12,13 @@ import dummyData from './dummyCvilleSearch'
 
 const { Title } = Typography;
 const { Search } = Input;
+const { Option } = Select;
 
 function App() {
   const [allRestaurants, setAllRestaurants] = useState([]);
-
-  const [searchLocation, setSearchLocation] = React.useState([38.033554, -78.507980]); //starts at CVille
-  const [searchRadius, setSearchRadius] = React.useState(3000); //radius
+  const [locationType, setLocationType] = useState("restaurant");
+  const [searchLocation, setSearchLocation] = useState([38.033554, -78.507980]); //starts at CVille
+  const [searchRadius, setSearchRadius] = useState(3000); //radius
 
   const axios = require("axios");
 
@@ -136,6 +137,7 @@ function App() {
     getNearByRestaurants();
   };
 
+  const validLocTypes = ["restaurant", "bar", "cafe"];
   const getNearByRestaurants = () => {
     axios
       .get(
@@ -144,7 +146,7 @@ function App() {
           params: {
             location: searchLocation[0] + "," + searchLocation[1],
             radius: searchRadius,
-            type: "restaurant",
+            type: locationType,
             opennow: true,
             key: GP_API_KEY
           }
@@ -165,15 +167,30 @@ function App() {
       <Col span={11} className="make-col-vert-span">
         <Title level={2}>Enter your location</Title>
         <div className="sticky-search">
-          <Search
-            placeholder="input search text"
-            size="large"
-            id="userSearch"
-            onSearch={searchString => {
-              makePlacesRequest(searchString);
-            }}
-            enterButton
-          />
+          <Input.Group compact>
+            <Search
+              style={{ width: '75%' }}
+              placeholder="input search text"
+              size="large"
+              id="userSearch"
+              onSearch={searchString => { 
+                makePlacesRequest(searchString);
+              }}
+              enterButton
+            />
+            <Select
+              style={{ width: '25%' }}
+              size="large"
+              value={locationType}
+              onChange={(e) => {
+                setLocationType(e);
+              }}>
+                {validLocTypes.map(str => {return <Option value={str}>
+                  {str}
+                </Option>})}
+            </Select>
+          </Input.Group>
+          
         </div>
         <div className="near-you-header">
           <Title level={2} style={{ marginTop: "15px" }}>Restaurants Near You</Title>
