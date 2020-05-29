@@ -7,6 +7,8 @@ import './MapDisplay.css';
 
 const MapDisplay = ({ allRestaurants }) => {
   const [mapObj, setMapObj] = React.useState();
+  const [layerGroup, setLayerGroup] = React.useState(new L.LayerGroup())
+  const [markers, setMarkers] = React.useState([])
 
   React.useEffect(() => {
     // create map
@@ -24,6 +26,7 @@ const MapDisplay = ({ allRestaurants }) => {
   }, []);
 
   React.useEffect(() => {
+
     var markerIcon = L.icon({
       iconUrl: require('leaflet/dist/images/marker-icon.png'),
       iconSize: [20, 40],
@@ -37,12 +40,14 @@ const MapDisplay = ({ allRestaurants }) => {
       let geometry = restaurant.geometry.location;
       let lat = geometry.lat;
       let long = geometry.lng;
+      let name = restaurant.name
       var marker = L.marker([lat, long],
         { icon: markerIcon })
-        .addTo(mapObj);
-      let name = restaurant.name
-      marker.bindPopup("<p>" + name + "</p>").openPopup();
+        .bindPopup("<p>" + name + "</p>")
+        .addTo(mapObj)
+        .openPopup()
     }
+
   }, [allRestaurants])
 
   return <div id="mapid"></div>

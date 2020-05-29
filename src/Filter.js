@@ -4,7 +4,7 @@ import { Menu, Dropdown } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 
 const Filter = props => {
-  const { allRestaurants, highRating, lowRating, aToZ, zToA, highPrice, lowPrice } = props;
+  const { allRestaurants, highRating, lowRating, aToZ, zToA, highPrice, lowPrice, far } = props;
 
   return (
     <Menu>
@@ -25,6 +25,9 @@ const Filter = props => {
       </Menu.Item>
       <Menu.Item>
         <a onClick={() => lowPrice(allRestaurants)}>Lowest Price</a>
+      </Menu.Item>
+      <Menu.Item>
+        <a onClick={() => far(allRestaurants)}>Farthest Distance</a>
       </Menu.Item>
     </Menu>
   );

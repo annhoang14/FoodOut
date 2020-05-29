@@ -12,7 +12,7 @@ function AppLayout() {
   return (
     <Layout className="whole-layout">
       <Header>
-        <h2 className="logo">Food Out! (temp name)</h2>
+        <h2 className="logo">Food Out!</h2>
       </Header>
       <Content style={{ padding: '20px 50px 20px 50px' }}>
         <div className="site-layout-content">

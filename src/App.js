@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Row, Col, Input, Typography, Dropdown, Menu } from "antd";
+import { Row, Col, Input, Typography, Dropdown, Menu, AutoComplete, Select } from "antd";
 import { DownOutlined } from '@ant-design/icons';
 
 import RestaurantDisplay from "./restaurant-display/RestaurantDisplay.js";
@@ -8,16 +8,16 @@ import MapDisplay from "./map-display/MapDisplay.js";
 import Filter from "./Filter.js";
 
 import "./App.css"
-import dummyData from './dummyCvilleSearch'
 
 const { Title } = Typography;
 const { Search } = Input;
+const { Option } = Select;
 
 function App() {
   const [allRestaurants, setAllRestaurants] = useState([]);
-
-  const [searchLocation, setSearchLocation] = React.useState([38.033554, -78.507980]); //starts at CVille
-  const [searchRadius, setSearchRadius] = React.useState(3000); //radius
+  const [locationType, setLocationType] = useState("restaurant");
+  const [searchLocation, setSearchLocation] = useState([38.033554, -78.507980]); //starts at CVille
+  const [searchRadius, setSearchRadius] = useState(3000); //radius
 
   const axios = require("axios");
 
@@ -95,25 +95,42 @@ function App() {
     setAllRestaurants(newArray);
   };
 
-  //computes distance between a restaurant and user location.
-  //accepts data in the form of (restaurants, searchLocation)
-  const computeDist = (a, b) => {
-    const R = 6371e3; // metres
-    const lat1 = a.geometry.location.lat;
-    const lat2 = b[0];
-    const lon1 = a.geometry.location.lng;
-    const lon2 = b[1];
-    const φ1 = lat1 * Math.PI / 180; // φ, λ in radians
-    const φ2 = lat2 * Math.PI / 180;
-    const Δφ = (lat2 - lat1) * Math.PI / 180;
-    const Δλ = (lon2 - lon1) * Math.PI / 180;
-    const d = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+  //Farthest away function
+  const far = arr => {
+    for(var i=0; i < allRestaurants.length; i++) {
+      console.log(allRestaurants[i])
+      const R = 6371e3; // metres
+      const lat1 = allRestaurants[i].geometry.location.lat;
+      const lat2 = searchLocation[0];
+      const lon1 = allRestaurants[i].geometry.location.lng;
+      const lon2 = searchLocation[1];
+      const φ1 = lat1 * Math.PI / 180; // φ, λ in radians
+      const φ2 = lat2 * Math.PI / 180;
+      const Δφ = (lat2 - lat1) * Math.PI / 180;
+      const Δλ = (lon2 - lon1) * Math.PI / 180;
+      const d = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
       Math.cos(φ1) * Math.cos(φ2) *
       Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-    const c = 2 * Math.atan2(Math.sqrt(d), Math.sqrt(1 - d));
-    const distMeters = R * c; // in metres
-    return distMeters / 1609 // in miles
+      const c = 2 * Math.atan2(Math.sqrt(d), Math.sqrt(1 - d));
+      const distMeters = R * c; // in metres
+      allRestaurants[i].distMeters = distMeters;
+    }
+    let newArray = arr.slice();
+    newArray.sort((a, b) => {
+      return b.distMeters - a.distMeters;
+    });
+    setAllRestaurants(newArray);
   }
+
+
+  //sorts by farthest distance
+  const close = arr => {
+    let newArray = arr.slice();
+    newArray.sort((a, b) => {
+      return a.distMeters - b.distMeters;
+    });
+    setAllRestaurants(newArray);
+  };
 
   const makePlacesRequest = (searchString) => {
     axios.get('https://maps.googleapis.com/maps/api/geocode/json?', {
@@ -129,13 +146,14 @@ function App() {
         //setSearchLocation([38.070591, -78.44631099999]); //hardcode cville location
       })
       .catch(function (error) {
-        console.log('ERROR in "makePlacesRequest"');
-        console.log(error);
+        // console.log('ERROR in "makePlacesRequest"');
+        // console.log(error);
       });
 
     getNearByRestaurants();
   };
 
+  const validLocTypes = ["restaurant", "bar", "cafe"];
   const getNearByRestaurants = () => {
     axios
       .get(
@@ -144,7 +162,7 @@ function App() {
           params: {
             location: searchLocation[0] + "," + searchLocation[1],
             radius: searchRadius,
-            type: "restaurant",
+            type: locationType,
             opennow: true,
             key: GP_API_KEY
           }
@@ -154,8 +172,8 @@ function App() {
         setAllRestaurants(response.data.results);
         //console.log(allRestaurants);
       }).catch(function (error) {
-        console.log('ERROR in "getNearByRestaurants"');
-        console.log(error);
+        // console.log('ERROR in "getNearByRestaurants"');
+        // console.log(error);
       });
 
   };
@@ -165,15 +183,30 @@ function App() {
       <Col span={11} className="make-col-vert-span">
         <Title level={2}>Enter your location</Title>
         <div className="sticky-search">
-          <Search
-            placeholder="input search text"
-            size="large"
-            id="userSearch"
-            onSearch={searchString => {
-              makePlacesRequest(searchString);
-            }}
-            enterButton
-          />
+          <Input.Group compact>
+            <Search
+              style={{ width: '75%' }}
+              placeholder="input search text"
+              size="large"
+              id="userSearch"
+              onSearch={searchString => { 
+                makePlacesRequest(searchString);
+              }}
+              enterButton
+            />
+            <Select
+              style={{ width: '25%' }}
+              size="large"
+              value={locationType}
+              onChange={(e) => {
+                setLocationType(e);
+              }}>
+                {validLocTypes.map(str => {return <Option value={str}>
+                  {str}
+                </Option>})}
+            </Select>
+          </Input.Group>
+          
         </div>
         <div className="near-you-header">
           <Title level={2} style={{ marginTop: "15px" }}>Restaurants Near You</Title>
@@ -188,6 +221,7 @@ function App() {
                 aToZ={aToZ}
                 zToA={zToA}
                 cleanup={cleanUp}
+                far={far}
               />
             </Menu>
           }
