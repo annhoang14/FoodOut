@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/FoodOut/static/css/main.66a04c89.chunk.css",
-    "main.js": "/FoodOut/static/js/main.dbaebbad.chunk.js",
-    "main.js.map": "/FoodOut/static/js/main.dbaebbad.chunk.js.map",
+    "main.js": "/FoodOut/static/js/main.ee2260a0.chunk.js",
+    "main.js.map": "/FoodOut/static/js/main.ee2260a0.chunk.js.map",
     "runtime-main.js": "/FoodOut/static/js/runtime-main.999826ec.js",
     "runtime-main.js.map": "/FoodOut/static/js/runtime-main.999826ec.js.map",
     "static/css/2.c36bc9e8.chunk.css": "/FoodOut/static/css/2.c36bc9e8.chunk.css",
     "static/js/2.c4432234.chunk.js": "/FoodOut/static/js/2.c4432234.chunk.js",
     "static/js/2.c4432234.chunk.js.map": "/FoodOut/static/js/2.c4432234.chunk.js.map",
     "index.html": "/FoodOut/index.html",
-    "precache-manifest.39be5239bcb70191b9ebf9900db736db.js": "/FoodOut/precache-manifest.39be5239bcb70191b9ebf9900db736db.js",
+    "precache-manifest.1daf08f35fbacb0e37273b56f69ad52c.js": "/FoodOut/precache-manifest.1daf08f35fbacb0e37273b56f69ad52c.js",
     "service-worker.js": "/FoodOut/service-worker.js",
     "static/css/2.c36bc9e8.chunk.css.map": "/FoodOut/static/css/2.c36bc9e8.chunk.css.map",
     "static/css/main.66a04c89.chunk.css.map": "/FoodOut/static/css/main.66a04c89.chunk.css.map",
@@ -21,6 +21,6 @@
     "static/css/2.c36bc9e8.chunk.css",
     "static/js/2.c4432234.chunk.js",
     "static/css/main.66a04c89.chunk.css",
-    "static/js/main.dbaebbad.chunk.js"
+    "static/js/main.ee2260a0.chunk.js"
   ]
 }

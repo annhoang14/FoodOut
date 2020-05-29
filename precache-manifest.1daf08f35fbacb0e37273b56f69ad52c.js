@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c75e07b3fed47082c7bc07d601516455",
+    "revision": "78dcce394e949a160c56d926de5ef098",
     "url": "/FoodOut/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/FoodOut/static/css/2.c36bc9e8.chunk.css"
   },
   {
-    "revision": "fed44d86c6884bd30d6c",
+    "revision": "1e88abe5df501814fb98",
     "url": "/FoodOut/static/css/main.66a04c89.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/FoodOut/static/js/2.c4432234.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "fed44d86c6884bd30d6c",
-    "url": "/FoodOut/static/js/main.dbaebbad.chunk.js"
+    "revision": "1e88abe5df501814fb98",
+    "url": "/FoodOut/static/js/main.ee2260a0.chunk.js"
   },
   {
     "revision": "de87b677d61cdfa0a19c",
