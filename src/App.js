@@ -98,7 +98,8 @@ function App() {
 
   //Farthest away function
   const far = arr => {
-    for(var i=0;i<allRestaurants.length;i++) {
+    for(var i=0; i < allRestaurants.length; i++) {
+      console.log(allRestaurants[i])
       const R = 6371e3; // metres
       const lat1 = allRestaurants[i].geometry.location.lat;
       const lat2 = searchLocation[0];
@@ -113,7 +114,7 @@ function App() {
       Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
       const c = 2 * Math.atan2(Math.sqrt(d), Math.sqrt(1 - d));
       const distMeters = R * c; // in metres
-      allRestaurants.push(distMeters);
+      allRestaurants[i].distMeters = distMeters;
     }
     let newArray = arr.slice();
     newArray.sort((a, b) => {
